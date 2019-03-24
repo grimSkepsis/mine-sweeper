@@ -1,0 +1,1 @@
+import './src/tile/tile.spec.ts';
