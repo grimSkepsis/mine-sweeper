@@ -14,7 +14,7 @@ export class GameControl {
   constructor(private _gridWidth: number,
     private _gridHeight: number,
     private _numMines: number,
-    private _gameOverHandler: () => void,
+    private _gameOverHandler: (gameWon: boolean) => void,
     private _timerElement: HTMLElement,
     private _counterElement: HTMLElement) {
     this._tileManager = new TileManager(_gridWidth, _gridHeight, _numMines);
@@ -107,7 +107,7 @@ export class GameControl {
     }));
     this.destroy();
     this._refreshBoard();
-    this._gameOverHandler();
+    this._gameOverHandler(gameWon);
   }
 
   private _initListeners(): void {

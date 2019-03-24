@@ -9,6 +9,7 @@ import { Tile } from './src/tile/tile.ts';
 import { GameControl } from './src/gameControl.ts';
 (function bootstrap() {
   let restartButton: HTMLElement = document.getElementById('restart-button');
+  let faceIcon: HTMLElement = document.querySelector('.face');
   let counterElement: HTMLElement = document.getElementById('counter');
   let timerElement: HTMLElement = document.getElementById('timer');
   let selectElement: HTMLSelectElement = document.querySelector('#difficulty-selector');
@@ -29,7 +30,12 @@ import { GameControl } from './src/gameControl.ts';
   restartButton.addEventListener('click', () => restartGame());
   selectElement.onchange = selectDifficulty;
 
-  function gameOver(): void {
+  function gameOver(gameWon: boolean): void {
+    if (gameWon) {
+      faceIcon.classList.add('game-won');
+    } else {
+      faceIcon.classList.add('game-lost');
+    }
   }
 
   function selectDifficulty(event: Event): void {
@@ -61,6 +67,8 @@ import { GameControl } from './src/gameControl.ts';
     if (gameControl) {
       gameControl.destroy();
     }
+    faceIcon.classList.remove('game-lost');
+    faceIcon.classList.remove('game-won');
     counterElement.innerHTML = mineCount.toString();
     timerElement.innerHTML = "000";
     gameControl = new GameControl(gridWidth, gridHeight, mineCount, gameOver, timerElement, counterElement);
